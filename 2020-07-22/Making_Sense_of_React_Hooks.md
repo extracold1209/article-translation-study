@@ -1,6 +1,6 @@
-> 제목 : Making Sense of React Hooks (React Hooks 이해하기)
-> 글쓴이 : Dan Abramov
-> 출처 : https://medium.com/@dan_abramov/making-sense-of-react-hooks-fdbde8803889
+> 제목 : Making Sense of React Hooks (React Hooks 이해하기)  
+> 글쓴이 : Dan Abramov  
+> 출처 : https://medium.com/@dan_abramov/making-sense-of-react-hooks-fdbde8803889  
 
 > 요약
 
