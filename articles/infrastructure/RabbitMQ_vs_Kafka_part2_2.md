@@ -6,7 +6,7 @@
 [이전글](../2020-08-05/RabbitMQ_vs_Kafka_part2_1.md)에 이어서 작성함
 
 ### 결함 처리
-![image](./images/fault_handling.jpg)
+![image](../../images/fault_handling.jpg)
 
 메시지와 큐 그리고 이벤트를 다룰 때, 개발자는 종종 메시지가 항상 성공한다는 인상을 받는다. 결국 생산자는 각각의 메시지를 큐 혹은 토픽에 배치 하기 때문에 소비자가 메시지 처리에 실패하더라도 성공할 때 까지 간단히 재시도할 수 있다.
 
@@ -35,7 +35,7 @@ DLX 의 주요 아이디어는 RabbitMQ 가 설정에 기반하여 실패한 메
 
 특정 소비자가 특정 메시지에 대한 처리를 재시도 하는 중에도 전체 메시지 처리는 멈추지 않는다. 결과적으로, 메시지 소비자는 전체 시스템에 영향을 주지 않으면서 동기적으로 메시지 처리를 다시 시도 할 수 있다.
 
-![image](./images/consumer_retry.png)
+![image](../../images/consumer_retry.png)
 *다른 소비자가 메시지를 처리하는 동안, 소비자 1은 메시지 1을 계속해서 재시도할 수 있다.*
 
 RabbitMQ 와는 대조적으로, Kafka 는 즉시 사용([out of the box](https://web-front-end.tistory.com/84))이 가능한 이러한 메커니즘을 제공하지 않는다. Kafka 를 사용하여 애플리케이션 레벨에서 메시지 재시도 메커니즘을 제공하고 구현함은 우리에게 달려있다.
@@ -49,14 +49,14 @@ RabbitMQ 와는 대조적으로, Kafka 는 즉시 사용([out of the box](https:
 이러한 구현 예제는 Uber.com 에서 확인할 수 있다.
 만약 메시지 처리 지연시간이 이슈가 아닌 경우에는 적절한 오류 모니터링 기능이 있는 바닐라 Kafka 솔루션으로도 충분할 수 있다.
 
-![image](./images/consumer_retry2.png)
+![image](../../images/consumer_retry2.png)
 *소비자가 메시지 재시도를 중단하면 하단 파티션의 메시지는 처리되지 않는다*
 
 #### 승자
 RabbitMQ 가 별도의 설정없이 이러한 문제를 해결하기 위한 메커니즘을 제공하기 때문에 승자이다.
 
 ### 스케일
-![image](./images/scale.jpg)
+![image](../../images/scale.jpg)
 
 RabbitMQ 와 Kafka 의 성능을 검사하는 다양한 벤치마크들이 있다.
 
@@ -77,7 +77,7 @@ RabbitMQ 와 Kafka 의 성능을 검사하는 다양한 벤치마크들이 있�
 그러나 중요한건, 대다수의 시스템에서는 이러한 한계에 도달하지 않는다는 점을 유의해야한다! 그러므로 수백만명의 사용자에게 큰 인기를 끄는 소프트웨어 시스템을 만들지 않는 한, 두 플랫폼 모두 잘 지원을  하므로 스케일 확장에 그렇게까지 신경쓸 필요는 없다.
 
 ### 소비자 복잡도
-![image](./images/consumer_complexity.jpg)
+![image](../../images/consumer_complexity.jpg)
 
 RabbitMQ 는 똑똑한 브로커와 멍청한 소비자 접근법을 사용한다. 소비자는 소비 큐에 등록하고, RabbitMQ 는 처리할 메시지가 들어오면 큐에 메시지를 푸시한다. RabbitMQ 에는 또한 pull API가 있으나, 많이 사용하진 않는다.
 
@@ -85,7 +85,7 @@ RabbitMQ 는 소비자에게 메시지 배포 및 큐에서 메시지 제거(DLX
 
 또한 RabbitMQ 의 구조는 부하가 증가할 때도, 시스템의 어떤 변경도 없이 큐의 소비자 그룹을 단 한명의 소비자에서 다수의 소비자들로 효율적으로 규모를 확장할 수 있음을 의미한다.
 
-![image](./images/consumer_scaling.png)
+![image](../../images/consumer_scaling.png)
 *RabbitMQ 소비자는 효율적으로 Scale-up 및 Scale-down 한다*
 
 반대로 Kafka 는 멍청한 브로커와 똑똑한 소비자 접근법을 사용한다. 소비자 그룹 내의 소비자는 그들 사이의 토픽 파티션에 대한 리스를 조정해야한다. (소비자 그룹의 한 소비자만이 특정한 파티션을 구독하도록)
@@ -96,7 +96,7 @@ RabbitMQ 는 소비자에게 메시지 배포 및 큐에서 메시지 제거(DLX
 
 그러나, 다시 부하가 감소하더라도 이미 추가한 파티션은 제거할 수 없으므로, 소비자가 해야하는 일이 더 많아진다. 위에서 언급했지만 이 SDK 는 추가적인 작업을 처리한다.
 
-![image](./images/kafka_consumer_scaling.png)
+![image](../../images/kafka_consumer_scaling.png)
 *Kafka 파티션은 제거되지 않는다. 규모 축소 후 소비자가 더 많은 작업을 할 수 있다*
 
 #### 승자
